@@ -1,17 +1,9 @@
-import os
-import sys
-import scipy.io
-import scipy.misc
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import imshow
-from PIL import Image
-from tensorflow.python.framework import ops
-from nst_utils import *
-import numpy as np
-import tensorflow as tf
 import imageio
+from tensorflow.python.client.session import InteractiveSession
+from tensorflow.python.framework import ops
 
-# %matplotlib inline
+from nst_utils import *
+
 
 def compute_content_cost(a_C, a_G):
     # Retrieve dimensions from a_G (≈1 line)
@@ -94,7 +86,7 @@ def total_cost(J_content, J_style, alpha=10, beta=40):
 ops.reset_default_graph()
 
 # Start interactive session
-sess = tf.compat.v1.InteractiveSession()
+sess: InteractiveSession = tf.compat.v1.InteractiveSession()
 
 content_image = imageio.imread("images/city.jpg")
 content_image = reshape_and_normalize_image(content_image)

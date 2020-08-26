@@ -1,12 +1,6 @@
-import os
-import sys
+import numpy as np
 import scipy.io
 import scipy.misc
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import imshow
-from PIL import Image
-
-import numpy as np
 import tensorflow as tf
 
 
@@ -22,7 +16,7 @@ class CONFIG:
     OUTPUT_DIR = 'output/'
 
 
-def load_vgg_model(path):
+def load_vgg_model(path) -> object:
     """
     Returns a model for the purpose of 'painting' the picture.
     Takes only the convolution layer weights and wrap using the TensorFlow
@@ -107,7 +101,7 @@ def load_vgg_model(path):
         W, b = _weights(layer, layer_name)
         W = tf.constant(W)
         b = tf.constant(np.reshape(b, (b.size)))
-        return tf.nn.conv2d(prev_layer, filter=W, strides=[1, 1, 1, 1], padding='SAME') + b
+        return tf.nn.conv2d(prev_layer, filters=W, strides=[1, 1, 1, 1], padding='SAME') + b
 
     def _conv2d_relu(prev_layer, layer, layer_name):
         """
@@ -151,7 +145,7 @@ def load_vgg_model(path):
     return graph
 
 
-def generate_noise_image(content_image, noise_ratio=CONFIG.NOISE_RATIO):
+def generate_noise_image(content_image, noise_ratio=CONFIG.NOISE_RATIO) -> object:
     """
     Generates a noisy image by adding random noise to the content_image
     """
